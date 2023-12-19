@@ -1,0 +1,22 @@
+# Ansible playbook for provisioning
+
+- hosts: localhost
+  user: root
+  vars_files:
+    - "{{tmp_dir}}/vars.yml"
+  tasks:
+  - name: Clone the ai processing unit
+    git:
+      repo: "https://github.com/3rickfs/nod.git"
+      #git@github.com:3rickfs/nod.git
+      dest: /home/nod/
+      clone: yes
+      update: yes
+  - name: install requirements
+    shell: pip install -r /home/nod/requirements.txt
+      #  - name: Grant permission to start process 
+      #    shell: chmod +x /etc/local.d/run_aipu_process.start
+      #  - name: Run the coordinator messenger aipu as a demon
+      #    shell: rc-update add local default
+
+
