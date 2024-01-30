@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: test-nod
-        image: 3rickmfs/nod:1.0.2
+        image: 3rickmfs/nod:1.0.3
         ports:
         - containerPort: 5000 
         command:
