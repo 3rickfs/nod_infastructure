@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-nod-set
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: test-nod
+  serviceName: "test-nod"
+  template:
+    metadata:
+      labels:
+        app: test-nod
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: test-nod
+        image: 3rickmfs/nod:1.2.1.1
+        ports:
+        - containerPort: 5000 
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo running nod app;
+            cd /home/nod/nod;
+            flask --app ./nod_api run --host=0.0.0.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        resources:
+          requests:
+            cpu: "1"
+            memory: "3072Mi"
+          limits:
+            cpu: "1"
+            memory: "4096Mi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-node-headless-service
+  labels:
+    app: test-node-headless-service
+spec:
+  ports:
+  - port: 5000
+  clusterIP: None
+  selector:
+    app: test-nod
+
+---
+

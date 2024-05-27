@@ -42,7 +42,7 @@
       "destination": "{{user `tmp_dir`}}/vars.yml"
     },
     { 
-      "type": "file,
+      "type": "file",
       "source": "{{user `pri_key_path`}}",
       "destination": "{{user `ssh_folder_path`}}/id_ed25519"
     },
@@ -72,7 +72,7 @@
       "inline": [
 	 "rm -f {{user `ssh_folder_path`}}/id_ed25519.pub"
       ]
-    },
+    }
   ],
 
   "post-processors": [

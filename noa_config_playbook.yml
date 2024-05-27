@@ -18,5 +18,8 @@
       #    shell: chmod +x /etc/local.d/run_aipu_process.start
       #  - name: Run the coordinator messenger aipu as a demon
       #    shell: rc-update add local default
-
+      #- name: create folders for nod to save files
+      #shell: |
+      #mkdir /home/nod/nod/uploads
+      #mkdir /home/nod/nod/uploads/sps
 
