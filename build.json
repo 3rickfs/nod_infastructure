@@ -2,7 +2,10 @@
   "variables": {
     "config_file": "vars/default.yml",
     "tmp_dir": "/tmp",
-    "boot_dir": "/etc/local.d"
+    "pri_key_path": "/home/dev-1/.ssh/id_ed25519",
+    "pub_key_path": "/home/dev-1/.ssh/id_ed25519.pub",
+    "ssh_folder_path": "/home/alpine/.ssh"
+    "passphrase": "{{env `PASSPHRASE`}}"
   },
 
   "builders":[
@@ -38,15 +41,38 @@
       "source": "{{user `config_file`}}",
       "destination": "{{user `tmp_dir`}}/vars.yml"
     },
+    { 
+      "type": "file",
+      "source": "{{user `pri_key_path`}}",
+      "destination": "{{user `ssh_folder_path`}}/id_ed25519"
+    },
+    {
+      "type": "file",
+      "source": "{{user `pub_key_path`}}",
+      "destination": "{{user `ssh_folder_path`}}/id_ed25519.pub"
+    }, 
     {
       "type": "ansible-local",
       "staging_directory": "{{user `tmp_dir`}}/ansible",
       "playbook_file": "playbook.yml",
       "extra_arguments": [ 
-	      "--extra-vars", "tmp_dir={{user `tmp_dir`}}"
+	      "--extra-vars", "tmp_dir={{user `tmp_dir`}}",
+              "--extra-vars", "passphrase={{user `passphrase`}}",
+              "--extra-vars", "ssh_folder_path={{ user `ssh_folder_path`}}"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+	 "rm -f {{user `ssh_folder_path`}}/id_ed25519"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+	 "rm -f {{user `ssh_folder_path`}}/id_ed25519.pub"
       ]
     }
-
   ],
 
   "post-processors": [
