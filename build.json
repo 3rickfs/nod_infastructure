@@ -80,7 +80,7 @@
       {
         "type": "docker-tag",
         "repository": "3rickmfs/nod",
-        "tag": "1.0.3"
+        "tag": "1.2.1.1"
       }
     ]
   ]
