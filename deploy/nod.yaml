@@ -16,11 +16,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: test-nod
-<<<<<<< HEAD:deploy/coordinator_messenger_aipu_v2.yaml
         image: 3rickmfs/nod:1.2.1.1
-=======
-        image: 3rickmfs/nod:1.0.3
->>>>>>> 1c51ba507194bb21fddf68f54ffc558af93cc740:deploy/noa.yaml
         ports:
         - containerPort: 5000 
         command: ["/bin/sh", "-c"]
